@@ -22,7 +22,7 @@ var rows = [200, 300, 400, 500, 600];
 renderer.autoResize = true;
 document.body.appendChild(renderer.view);
 
-loader.add("resources/BathroomAtlas.json").add("resources/sprites/char1.png").load(setup);
+loader.add("resources/BathroomAtlas.json").add("resources/sprites/floor2.png").add("resources/sprites/char1.png").load(setup);
 
 var Enemy = function () {
     this.sprite = new Sprite(resources["resources/sprites/char1.png"].texture);
@@ -57,13 +57,16 @@ function drawStage() {
     wallBottom.y = height - 5;
     stage.addChild(wallBottom);
 
-    var rect = new PIXI.Graphics();
+    for (var y in rows) {
+        var floor2 = new PIXI.extras.TilingSprite(resources["resources/sprites/floor2.png"].texture, width - 100, 32);
 
-    for (var i in rows) {
-        rect.beginFill(0x000000);
-        rect.drawRect(50, rows[i], width - 100, 32);
-        rect.endFill();
-        stage.addChild(rect);
+        floor2.scale.set(0.485, 0.485);
+        floor2.position.set(49, rows[y] + 15);
+
+        floor2.height = 32;
+        floor2.width = (width - 100) / 0.485;
+
+        stage.addChild(floor2);
     }
 }
 
