@@ -17,8 +17,8 @@ var floor;
 var wallTop, wallBottom;
 
 var enemies = [];
-var rows = [200, 300, 400, 500, 600];
-var rows2 = [250, 350, 450, 550];
+var rows = [260, 320, 380, 440, 500];
+var rows2 = [295, 355, 415, 475];
 
 renderer.autoResize = true;
 document.body.appendChild(renderer.view);
