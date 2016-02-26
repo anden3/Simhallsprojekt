@@ -18,19 +18,23 @@ var wallTop, wallBottom;
 
 var enemies = [];
 var rows = [200, 300, 400, 500, 600];
+var rows2 = [250, 350, 450, 550];
 
 renderer.autoResize = true;
 document.body.appendChild(renderer.view);
 
-loader.add("resources/BathroomAtlas.json").add("resources/sprites/floor2.png").add("resources/sprites/char1.png").load(setup);
+loader.add("resources/BathroomAtlas.json").add("resources/sprites/tile.png").add("resources/sprites/brunn.png").add("resources/sprites/char.png").load(setup);
 
 var Enemy = function () {
-    this.sprite = new Sprite(resources["resources/sprites/char1.png"].texture);
+    this.sprite = new Sprite(resources["resources/sprites/char.png"].texture);
 
     this.sprite.x = width - 50;
     this.sprite.y = rows[Math.floor(Math.random() * rows.length)] - 75;
     this.sprite.width = 128;
     this.sprite.height = 128;
+
+
+    this.speed = 5;
 
     enemies.push(this);
     stage.addChild(this.sprite);
@@ -58,25 +62,37 @@ function drawStage() {
     stage.addChild(wallBottom);
 
     for (var y in rows) {
-        var floor2 = new PIXI.extras.TilingSprite(resources["resources/sprites/floor2.png"].texture, width - 100, 32);
+        var floor2 = new PIXI.extras.TilingSprite(resources["resources/sprites/tile.png"].texture, width - 100, 32);
 
-        floor2.scale.set(0.485, 0.485);
+        floor2.scale.set(0.2, 0.2);
         floor2.position.set(49, rows[y] + 15);
 
-        floor2.height = 32;
-        floor2.width = (width - 100) / 0.485;
+        floor2.height = 160;
+        floor2.width = (width - 100) / 0.2;
 
         stage.addChild(floor2);
+    }
+
+    for (var y in rows2) {
+        var brunn = new PIXI.extras.TilingSprite(resources["resources/sprites/brunn.png"].texture, width - 100, 39);
+
+        brunn.scale.set(0.485, 0.485);
+        brunn.position.set(49, rows2[y] + 15);
+
+        brunn.height = 39;
+        brunn.width = (width - 100) / 0.485;
+
+        stage.addChild(brunn);
     }
 }
 
 function mainLoop() {
     for (var i in enemies) {
-        if (enemies[i].sprite.x < -128) {
+        if (enemies[i].sprite.x < -500) {
             enemies.splice(i, 1);
             stage.removeChild(enemies[i].sprite);
         }
-        enemies[i].sprite.x -= 1;
+        enemies[i].sprite.x -= enemies[i].speed;
     }
     renderer.render(stage);
 
